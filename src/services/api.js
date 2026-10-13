@@ -4,9 +4,11 @@ import axios from 'axios';
  * Central Axios Instance for 3-tier communication with Spring Boot backend.
  * Automatically attaches the JWT Bearer token to headers of every outgoing request.
  */
+const defaultBaseUrl = import.meta.env.DEV ? '/api' : 'https://spmp-backend-1.onrender.com/api';
 const apiBaseUrl = import.meta.env.VITE_API_URL 
   ? (import.meta.env.VITE_API_URL.endsWith('/api') ? import.meta.env.VITE_API_URL : `${import.meta.env.VITE_API_URL}/api`)
-  : '/api';
+  : defaultBaseUrl;
+
 
 const api = axios.create({
   baseURL: apiBaseUrl,
