@@ -4,13 +4,18 @@ import axios from 'axios';
  * Central Axios Instance for 3-tier communication with Spring Boot backend.
  * Automatically attaches the JWT Bearer token to headers of every outgoing request.
  */
+const apiBaseUrl = import.meta.env.VITE_API_URL 
+  ? (import.meta.env.VITE_API_URL.endsWith('/api') ? import.meta.env.VITE_API_URL : `${import.meta.env.VITE_API_URL}/api`)
+  : '/api';
+
 const api = axios.create({
-  baseURL: '/api',
+  baseURL: apiBaseUrl,
   headers: {
     'Content-Type': 'application/json',
   },
-  timeout: 15000,
+  timeout: 25000,
 });
+
 
 // Request Interceptor: Injects Authorization Header if JWT token exists in localStorage
 api.interceptors.request.use(
